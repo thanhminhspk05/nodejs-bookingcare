@@ -17,7 +17,7 @@ let createNewUser = async (data) => {
                 gender: data.gender === '1' ? true : false,
                 roleId: data.roleId,
             });
-            resolve('Oke create a new user successfully');
+            resolve();
         } catch (e) {
             reject(e);
         }
@@ -46,7 +46,63 @@ let getAllUsers = () => {
     });
 };
 
+let getUserInfoById = (userId) => {
+    // access database need Promise to cancel async
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = db.User.findOne({
+                where: { id: userId },
+            });
+            if (user) {
+                resolve(user);
+            }
+        } catch (e) {
+            reject(e);
+        }
+    });
+};
+
+let updateUserData = (data) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({
+                where: { id: data.id },
+            });
+            if (user) {
+                user.firstName = data.firstName;
+                user.lastName = data.lastName;
+                user.address = data.address;
+                await user.save();
+                let allUsers = await db.User.findAll();
+                resolve(allUsers);
+            } else {
+                resolve();
+            }
+            // await db.User.update();
+        } catch (e) {
+            console.log(e);
+        }
+    });
+};
+
+let deleteUserById = (userId) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let user = await db.User.findOne({ where: { id: userId } });
+            if (user) {
+                await user.destroy();
+            }
+            resolve(); // exit function == return
+        } catch (e) {
+            reject(e); // or console.log(e)
+        }
+    });
+};
+
 module.exports = {
     createNewUser: createNewUser,
     getAllUsers: getAllUsers,
+    getUserInfoById: getUserInfoById,
+    updateUserData: updateUserData,
+    deleteUserById: deleteUserById,
 };
