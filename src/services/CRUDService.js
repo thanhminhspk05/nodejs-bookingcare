@@ -19,7 +19,7 @@ let createNewUser = async (data) => {
             });
             resolve();
         } catch (e) {
-            reject(e);
+            console.log(e);
         }
     });
 };
@@ -30,7 +30,7 @@ let hashUserPassword = (password) => {
             let hashPassword = await bcrypt.hashSync(password, salt);
             resolve(hashPassword);
         } catch (e) {
-            reject(e);
+            console.log(e);
         }
     });
 };
@@ -41,7 +41,7 @@ let getAllUsers = () => {
             let user = db.User.findAll();
             resolve(user);
         } catch (e) {
-            reject(e);
+            console.log(e);
         }
     });
 };
@@ -57,7 +57,7 @@ let getUserInfoById = (userId) => {
                 resolve(user);
             }
         } catch (e) {
-            reject(e);
+            console.log(e);
         }
     });
 };
@@ -73,11 +73,9 @@ let updateUserData = (data) => {
                 user.lastName = data.lastName;
                 user.address = data.address;
                 await user.save();
-                let allUsers = await db.User.findAll();
-                resolve(allUsers);
-            } else {
                 resolve();
             }
+            resolve();
             // await db.User.update();
         } catch (e) {
             console.log(e);

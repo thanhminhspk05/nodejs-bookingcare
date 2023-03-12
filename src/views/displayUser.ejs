@@ -4,7 +4,7 @@
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>User Infomation</title>
         <style>
             table {
                 font-family: arial, sans-serif;
@@ -27,15 +27,17 @@
                 width: 100px;
             }
 
-            .btn {
+
+            a {
                 color: #000;
+                text-decoration: none;
             }
 
 
         </style>
     </head>
     <body>
-        <h2>Info User</h2>
+        <h2>User Infomation</h2>
 
         <table>
             <tr>
@@ -52,12 +54,17 @@
                     <td><%= dataTable[i].lastName %></td>
                     <td><%= dataTable[i].address %></td>
                     <td>
-                        <a href="/edit-crud?id=<%= dataTable[i].id%>" type="button" class="btn btn-edit">Edit</a>
-                        <a href="/delete-crud?id=<%= dataTable[i].id%>" type="button" class="btn btn-delete">Delete</a>
+                        <button>
+                            <a href="/edit-user?id=<%= dataTable[i].id%>" type="button" class="btn btn-edit">Edit</a>
+                        </button>
+                        <button>
+                            <a href="/delete-user?id=<%= dataTable[i].id%>" type="button" class="btn btn-edit">Delete</a>
+                        </button>
                     </td>
                 </tr>
             <% } %>
             </tr>
         </table>
+        <script src="../services/CRUDService.js"></script>
     </body>
 </html>
